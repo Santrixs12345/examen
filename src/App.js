@@ -9,10 +9,7 @@ function App() {
       <p>
           El bot escojio
         </p>
-      <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          A, creo k es un ppt
-        </p>
+      
         <div>
           <Game/>
         </div>

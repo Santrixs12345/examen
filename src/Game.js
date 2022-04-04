@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
+import logo from './logo.svg';
+import papel from './papel.svg';
+import piedra from './piedra.svg';
+import tijeras from './tijeras.svg';
 import './Game.css';
 
 class Game extends Component {
-    
+
     constructor() {
         super()
         this.state = {
             number: "",
             message: "",
-            random: generateRandomNumber(3)
+            random: generateRandomNumber(3),
+            pointb: "",
+            pointy: ""
         }
-
+    
         
     }
 
@@ -35,11 +41,58 @@ class Game extends Component {
         });
     }
 
+    calculateText(random, number, pointb, pointy) {
+    
+    if (random === number) {
+        return "empataron";
+        
+    }
+     else {
+        if (number === 1 && random === 2 || number === 1 && random === 3) {
+            if (random === 2){
+                pointb++
+                return "perdiste"
+            }
+            if (random === 3){
+                pointy++
+                return "ganaste"
+            }
+        }
+        if (number === 2 && random === 1 || number === 2 && random === 3) {
+            if (random === 1){
+                pointy++
+                return "ganaste"
+            }
+            if (random === 3){
+                pointb++
+                return "perdiste"
+            }
+        }
+        if (number === 3 && random === 1 || number === 3 && random === 2) {
+            if (random === 1){
+                pointb++
+                return "perdiste"
+            }
+            if (random === 2){
+                pointy++
+                return "ganaste"
+            }
+        }
+    }
+    //1 es piedra
+    //2 es papel
+    //3 es tijeras
+}
+
     handleOnClick = () => {
         const number = parseInt(this.state.number);
         const random = parseInt(this.state.random);
-        const text = calculateText(random);
-        console.log(random);
+        const pointb = parseInt(this.state.pointb);
+        const pointy = parseInt(this.state.pointy);
+        const text = calculateText(random, number, pointb, pointy);
+        console.log("el random", random);
+        console.log("bot", pointb);
+        console.log("tu", pointy);
 
         if (number !== random){
             this.setState({
@@ -53,11 +106,15 @@ class Game extends Component {
         }
         
     }
+    
 
     render() {
         
         return (
             <div className="Game">
+                <header>
+                <img src={logo} className="App-logo" alt="logo" />
+                </header>
                 <h2 className={(this.state.message)&& 'flickering'}>{this.state.message}</h2>
                 <p>Que escojes?</p>
                 <p>1 es piedra - 2 es papel - 3 es tijeras</p>
@@ -76,22 +133,52 @@ class Game extends Component {
 
 export default Game;
 
-function generateRandomNumber(max, min=1) {
-    return Math.floor(Math.random()*(max - min) + min);
-}
 
-function calculateText(random) {
+
+function calculateText(random, number, pointb, pointy) {
     
-    if (random === 1) {
-        return "Escojio piedra";
+    if (random === number) {
+        return "empataron";
+        
     }
      else {
-        if (random === 2) {
-            return "Escojio papel"
-        } else {
-            return "Escojio tijeras"
+        if (number === 1 && random === 2 || number === 1 && random === 3) {
+            if (random === 2){
+                pointb++
+                return "perdiste"
+            }
+            if (random === 3){
+                pointy++
+                return "ganaste"
+            }
         }
-     }
-    
+        if (number === 2 && random === 1 || number === 2 && random === 3) {
+            if (random === 1){
+                pointy++
+                return "ganaste"
+            }
+            if (random === 3){
+                pointb++
+                return "perdiste"
+            }
+        }
+        if (number === 3 && random === 1 || number === 3 && random === 2) {
+            if (random === 1){
+                pointb++
+                return "perdiste"
+            }
+            if (random === 2){
+                pointy++
+                return "ganaste"
+            }
+        }
+    }
+    //1 es piedra
+    //2 es papel
+    //3 es tijeras
+}
+
+function generateRandomNumber(max, min=1) {
+    return Math.floor(Math.random()*(max - min) + min);
 }
 
